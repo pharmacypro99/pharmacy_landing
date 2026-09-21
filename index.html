@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacy Pro — نظام إدارة الصيدليات المتكامل</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Segoe UI', 'Tahoma', sans-serif;
+        background: #0a0e1a;
+        color: #e5e7eb;
+        line-height: 1.7;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    
+    /* Header */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: linear-gradient(135deg, #0a0e1a 0%, #1e293b 50%, #0a0e1a 100%);
+        padding: 40px 20px;
+    }
+    .hero-content { max-width: 800px; }
+    .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .hero p {
+        font-size: 1.25rem;
+        color: #94a3b8;
+        margin-bottom: 40px;
+    }
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn {
+        padding: 16px 40px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-block;
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+    }
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(59, 130, 246, 0.6);
+    }
+    .btn-secondary {
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.2);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+    
+    /* Features */
+    .features {
+        padding: 80px 20px;
+        background: #0f172a;
+    }
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 60px;
+        color: white;
+    }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .feature-card {
+        background: rgba(30, 41, 59, 0.8);
+        border: 1px solid rgba(96, 165, 250, 0.2);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.3s;
+    }
+    .feature-card:hover {
+        border-color: #3b82f6;
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+    }
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 16px;
+    }
+    .feature-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+        color: #60a5fa;
+    }
+    .feature-card p { color: #94a3b8; }
+    
+    /* Pricing */
+    .pricing {
+        padding: 80px 20px;
+        background: #0a0e1a;
+    }
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    .price-card {
+        background: rgba(30, 41, 59, 0.8);
+        border: 2px solid rgba(96, 165, 250, 0.2);
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .price-card.featured {
+        border-color: #8b5cf6;
+        transform: scale(1.05);
+        box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+    }
+    .price-card.featured::before {
+        content: "الأكثر طلباً";
+        position: absolute;
+        top: -15px;
+        right: 50%;
+        transform: translateX(50%);
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 6px 20px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+    .price-card h3 {
+        font-size: 1.5rem;
+        color: #60a5fa;
+        margin-bottom: 20px;
+    }
+    .price {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        margin: 20px 0;
+    }
+    .price span {
+        font-size: 1rem;
+        color: #94a3b8;
+        font-weight: normal;
+    }
+    .price-features {
+        list-style: none;
+        margin: 30px 0;
+        text-align: right;
+    }
+    .price-features li {
+        padding: 10px 0;
+        color: #cbd5e1;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .price-features li::before {
+        content: "✅ ";
+        color: #10b981;
+    }
+    
+    /* Contact */
+    .contact {
+        padding: 80px 20px;
+        background: linear-gradient(135deg, #1e293b, #0a0e1a);
+        text-align: center;
+    }
+    .contact h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: white;
+    }
+    .contact p {
+        font-size: 1.15rem;
+        color: #94a3b8;
+        margin-bottom: 40px;
+    }
+    .contact-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /* Footer */
+    footer {
+        padding: 30px;
+        text-align: center;
+        color: #64748b;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>نظام إدارة الصيدليات المتكامل</h1>
+        <p>حل شامل لإدارة صيدليتك: مخزون، مبيعات، تقارير، وبوت تيليجرام — كل ذلك في تطبيق واحد</p>
+        <div class="cta-buttons">
+            <a href="#trial" class="btn btn-primary">🚀 تجربة مجانية 14 يوم</a>
+            <a href="#features" class="btn btn-secondary">📖 تعرّف على الميزات</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <h2 class="section-title">✨ كل ما تحتاجه في مكان واحد</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h3>إدارة المخزون</h3>
+            <p>تتبع الأدوية، الدفعات، تواريخ الانتهاء، والتنبيهات التلقائية</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🛒</div>
+            <h3>نظام المبيعات</h3>
+            <p>بيع سريع، خصومات، طرق دفع متعددة، طباعة حرارية</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>العملاء والديون</h3>
+            <p>إدارة كاملة للعملاء، متابعة الديون، تقارير مفصلة</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>التقارير المحاسبية</h3>
+            <p>نظام مزدوج القيد، تقارير مالية، أرباح، ضرائب</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>بوت تيليجرام</h3>
+            <p>إشعارات فورية، تقارير مبيعات، تنبيهات المخزون من جوالك</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>أمان متقدم</h3>
+            <p>تشفير قاعدة البيانات، ترخيص مرتبط بالجهاز، نسخ احتياطي تلقائي</p>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing">
+    <h2 class="section-title">💰 خطط وأسعار</h2>
+    <div class="pricing-grid">
+        <div class="price-card">
+            <h3>Desktop</h3>
+            <div class="price">150,000<span> د.ع/سنة</span></div>
+            <ul class="price-features">
+                <li>سطح المكتب فقط</li>
+                <li>مخزون + مبيعات + عملاء</li>
+                <li>تقارير كاملة</li>
+                <li>نسخ احتياطي</li>
+                <li>دعم فني أساسي</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
+        </div>
+        
+        <div class="price-card featured">
+            <h3>Desktop + Bot</h3>
+            <div class="price">250,000<span> د.ع/سنة</span></div>
+            <ul class="price-features">
+                <li>كل ميزات Desktop</li>
+                <li>بوت تيليجرام مدمج</li>
+                <li>إشعارات فورية</li>
+                <li>تقارير من الجوال</li>
+                <li>دعم فني مميز</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary">اطلب الآن</a>
+        </div>
+        
+        <div class="price-card">
+            <h3>Full + Support</h3>
+            <div class="price">400,000<span> د.ع/سنة</span></div>
+            <ul class="price-features">
+                <li>كل ميزات Full</li>
+                <li>تدريب مخصص</li>
+                <li>دعم على مدار الساعة</li>
+                <li>تخصيصات خاصة</li>
+                <li>تحديثات مجانية</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <h2>📞 جاهز للبدء؟</h2>
+    <p>تواصل معنا لطلب تجربة مجانية 14 يوم</p>
+    <div class="contact-buttons">
+        <a href="https://wa.me/9647700970716" class="btn btn-primary">💬 واتساب</a>
+        <a href="https://t.me/@hmk1005" class="btn btn-secondary">📱 تيليجرام</a>
+        <a href="mailto:info@example.com" class="btn btn-secondary">✉️ البريد</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Pharmacy Pro — جميع الحقوق محفوظة</p>
+</footer>
+
+</body>
+</html>
