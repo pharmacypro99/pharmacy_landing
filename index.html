@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pharmacy Pro — نظام إدارة الصيدليات المتكامل</title>
+<title>Pharmacy Pro v2.0.8 — نظام إدارة الصيدليات المتكامل</title>
+<meta name="description" content="نظام إدارة صيدليات متكامل: مخزون، مبيعات، تقارير، بوت تيليجرام. دعم كامل للعربية والإنجليزية.">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -14,9 +15,34 @@
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     
+    /* Version Banner */
+    .version-banner {
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 12px 20px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+        position: relative;
+    }
+    .version-banner a {
+        color: white;
+        text-decoration: underline;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+    .version-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        padding: 2px 10px;
+        border-radius: 12px;
+        font-size: 0.9em;
+        margin-left: 10px;
+    }
+    
     /* Header */
     .hero {
-        min-height: 100vh;
+        min-height: 80vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -53,6 +79,7 @@
         text-decoration: none;
         transition: all 0.3s;
         display: inline-block;
+        cursor: pointer;
     }
     .btn-primary {
         background: linear-gradient(135deg, #3b82f6, #8b5cf6);
@@ -100,6 +127,22 @@
         transform: translateY(-5px);
         box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
     }
+    .feature-card.new {
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.05);
+        position: relative;
+    }
+    .new-badge {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 3px 12px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
     .feature-icon {
         font-size: 2.5rem;
         margin-bottom: 16px;
@@ -118,27 +161,30 @@
     }
     .pricing-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-        max-width: 1100px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+        max-width: 1200px;
         margin: 0 auto;
     }
     .price-card {
         background: rgba(30, 41, 59, 0.8);
         border: 2px solid rgba(96, 165, 250, 0.2);
         border-radius: 20px;
-        padding: 40px 30px;
+        padding: 35px 25px;
         text-align: center;
         transition: all 0.3s;
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
     .price-card.featured {
         border-color: #8b5cf6;
         transform: scale(1.05);
         box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+        background: rgba(139, 92, 246, 0.05);
     }
     .price-card.featured::before {
-        content: "الأكثر طلباً";
+        content: "⭐ الأكثر طلباً";
         position: absolute;
         top: -15px;
         right: 50%;
@@ -147,39 +193,85 @@
         color: white;
         padding: 6px 20px;
         border-radius: 20px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: bold;
+        white-space: nowrap;
     }
     .price-card h3 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         color: #60a5fa;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
+    .price-card.lifetime h3 { color: #ec4899; }
     .price {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         font-weight: 800;
         color: white;
-        margin: 20px 0;
+        margin: 15px 0;
+        line-height: 1.2;
     }
     .price span {
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: #94a3b8;
         font-weight: normal;
+        display: block;
+        margin-top: 5px;
+    }
+    .price-old {
+        font-size: 1.2rem;
+        color: #64748b;
+        text-decoration: line-through;
+        margin-bottom: 5px;
+    }
+    .discount-badge {
+        display: inline-block;
+        background: #10b981;
+        color: white;
+        padding: 3px 10px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
     .price-features {
         list-style: none;
-        margin: 30px 0;
+        margin: 25px 0;
         text-align: right;
+        flex: 1;
     }
     .price-features li {
-        padding: 10px 0;
+        padding: 8px 0;
         color: #cbd5e1;
         border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.95rem;
     }
     .price-features li::before {
         content: "✅ ";
         color: #10b981;
     }
+    .price-features li.cross::before {
+        content: "❌ ";
+        color: #ef4444;
+    }
+    .price-card .btn {
+        margin-top: auto;
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+    
+    /* Guarantee */
+    .guarantee {
+        background: linear-gradient(135deg, #065f46, #047857);
+        padding: 40px 20px;
+        text-align: center;
+        color: white;
+    }
+    .guarantee h3 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    .guarantee p { font-size: 1.1rem; opacity: 0.95; }
     
     /* Contact */
     .contact {
@@ -204,6 +296,26 @@
         flex-wrap: wrap;
     }
     
+    /* FAQ */
+    .faq {
+        padding: 60px 20px;
+        background: #0f172a;
+    }
+    .faq-item {
+        max-width: 800px;
+        margin: 0 auto 20px;
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 12px;
+        padding: 20px 25px;
+        border-right: 3px solid #3b82f6;
+    }
+    .faq-item h4 {
+        color: #60a5fa;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .faq-item p { color: #94a3b8; }
+    
     /* Footer */
     footer {
         padding: 30px;
@@ -211,17 +323,28 @@
         color: #64748b;
         border-top: 1px solid rgba(255,255,255,0.05);
     }
+    
+    @media (max-width: 768px) {
+        .price-card.featured { transform: scale(1); }
+    }
 </style>
 </head>
 <body>
+
+<!-- Version Banner -->
+<div class="version-banner">
+    🎉 الإصدار 2.0.8 متاح — دعم ثنائي اللغة كامل
+    <span class="version-badge">v2.0.8</span>
+    <a href="#pricing">اكتشف الجديد →</a>
+</div>
 
 <!-- Hero Section -->
 <section class="hero">
     <div class="hero-content">
         <h1>نظام إدارة الصيدليات المتكامل</h1>
-        <p>حل شامل لإدارة صيدليتك: مخزون، مبيعات، تقارير، وبوت تيليجرام — كل ذلك في تطبيق واحد</p>
+        <p>حل شامل لإدارة صيدليتك: مخزون، مبيعات، تقارير، وبوت تيليجرام — بدعم كامل للعربية والإنجليزية</p>
         <div class="cta-buttons">
-            <a href="#trial" class="btn btn-primary">🚀 تجربة مجانية 14 يوم</a>
+            <a href="#pricing" class="btn btn-primary">🎁 تجربة مجانية 14 يوم</a>
             <a href="#features" class="btn btn-secondary">📖 تعرّف على الميزات</a>
         </div>
     </div>
@@ -261,68 +384,155 @@
             <h3>أمان متقدم</h3>
             <p>تشفير قاعدة البيانات، ترخيص مرتبط بالجهاز، نسخ احتياطي تلقائي</p>
         </div>
+        <div class="feature-card new">
+            <span class="new-badge">جديد v2.0.8</span>
+            <div class="feature-icon">🌐</div>
+            <h3>دعم ثنائي اللغة كامل</h3>
+            <p>كل شاشة، رسالة، تقرير — بالعربية والإنجليزية بضغطة واحدة</p>
+        </div>
+        <div class="feature-card new">
+            <span class="new-badge">جديد v2.0.8</span>
+            <div class="feature-icon">🎯</div>
+            <h3>رسائل ترخيص ذكية</h3>
+            <p>تحذيرات التفعيل والنظام بلغتك المفضلة — تجربة موحدة</p>
+        </div>
     </div>
 </section>
 
 <!-- Pricing Section -->
-<section class="pricing">
+<section class="pricing" id="pricing">
     <h2 class="section-title">💰 خطط وأسعار</h2>
     <div class="pricing-grid">
+        
+        <!-- Desktop Yearly -->
         <div class="price-card">
-            <h3>Desktop</h3>
-            <div class="price">150,000<span> د.ع/سنة</span></div>
+            <h3>🖥️ Desktop</h3>
+            <div class="price">
+                150,000
+                <span>د.ع / سنة</span>
+            </div>
             <ul class="price-features">
                 <li>سطح المكتب فقط</li>
                 <li>مخزون + مبيعات + عملاء</li>
                 <li>تقارير كاملة</li>
-                <li>نسخ احتياطي</li>
+                <li>نسخ احتياطي تلقائي</li>
+                <li class="cross">بوت تيليجرام</li>
                 <li>دعم فني أساسي</li>
             </ul>
             <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
         </div>
         
-        <div class="price-card featured">
-            <h3>Desktop + Bot</h3>
-            <div class="price">250,000<span> د.ع/سنة</span></div>
+        <!-- Desktop + Bot Yearly -->
+        <div class="price-card">
+            <h3>🖥️ + 🤖 سنوي</h3>
+            <div class="price">
+                250,000
+                <span>د.ع / سنة</span>
+            </div>
             <ul class="price-features">
                 <li>كل ميزات Desktop</li>
                 <li>بوت تيليجرام مدمج</li>
                 <li>إشعارات فورية</li>
-                <li>تقارير من الجوال</li>
+                <li>تقارير من جوالك</li>
+                <li>ترخيص منفصل للبوت</li>
                 <li>دعم فني مميز</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
+        </div>
+        
+        <!-- Lifetime Featured -->
+        <div class="price-card featured lifetime">
+            <h3>♾️ مدى الحياة</h3>
+            <div class="discount-badge">🎁 وفّر 50%</div>
+            <div class="price-old">1,000,000 د.ع</div>
+            <div class="price">
+                500,000
+                <span>د.ع — دفعة واحدة</span>
+            </div>
+            <ul class="price-features">
+                <li>كل ميزات Full</li>
+                <li>سطح المكتب + بوت</li>
+                <li>ترخيص دائم (لا انتهاء)</li>
+                <li>تحديثات مجانية سنتين</li>
+                <li>دعم فني 6 أشهر</li>
+                <li>تدريب مجاني (ساعتان)</li>
             </ul>
             <a href="#contact" class="btn btn-primary">اطلب الآن</a>
         </div>
         
+        <!-- Enterprise -->
         <div class="price-card">
-            <h3>Full + Support</h3>
-            <div class="price">400,000<span> د.ع/سنة</span></div>
+            <h3>🏢 Enterprise</h3>
+            <div class="price">
+                تواصل معنا
+                <span>سعر مخصص</span>
+            </div>
             <ul class="price-features">
-                <li>كل ميزات Full</li>
-                <li>تدريب مخصص</li>
+                <li>كل ميزات Lifetime</li>
+                <li>تخصيص كامل</li>
+                <li>ربط بعدة فروع</li>
+                <li>API خاص</li>
                 <li>دعم على مدار الساعة</li>
-                <li>تخصيصات خاصة</li>
-                <li>تحديثات مجانية</li>
+                <li>مدير حساب مخصص</li>
             </ul>
-            <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
+            <a href="#contact" class="btn btn-secondary">تواصل</a>
         </div>
+        
     </div>
+</section>
+
+<!-- Guarantee Section -->
+<section class="guarantee">
+    <h3>🛡️ ضمان استرداد كامل 30 يوم</h3>
+    <p>إذا لم يعجبك النظام في أول 30 يوم، نُعيد لك المبلغ كاملاً — بدون أسئلة</p>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq">
+    <h2 class="section-title">❓ أسئلة شائعة</h2>
+    
+    <div class="faq-item">
+        <h4>💰 الفرق بين السنوي ومدى الحياة؟</h4>
+        <p>السنوي: تدفع سنوياً وتجدد. مدى الحياة: تدفعة واحدة، الترخيص دائم — توفير 50% بعد سنتين.</p>
+    </div>
+    
+    <div class="faq-item">
+        <h4>🖥️ هل يعمل على أكثر من جهاز؟</h4>
+        <p>الترخيص مرتبط بجهاز واحد. للأجهزة الإضافية: خصم 30% لكل جهاز.</p>
+    </div>
+    
+    <div class="faq-item">
+        <h4>🔄 ماذا بعد انتهاء الترخيص السنوي؟</h4>
+        <p>يمكنك التجديد بنفس السعر، أو الترقية إلى مدى الحياة بدفعة واحدة بخصم.</p>
+    </div>
+    
+    <div class="faq-item">
+        <h4>📊 هل بياناتي آمنة؟</h4>
+        <p>نعم — قاعدة البيانات مشفّرة بالكامل، ولا تُرسل أي بيانات لخوادم خارجية.</p>
+    </div>
+    
+    <div class="faq-item">
+        <h4>🎓 هل يوجد تدريب؟</h4>
+        <p>نعم — جلسة تدريب مجانية (ساعتان) أونلاين لكل عميل مدى الحياة. جلستان للـ Enterprise.</p>
+    </div>
+    
 </section>
 
 <!-- Contact Section -->
 <section class="contact" id="contact">
     <h2>📞 جاهز للبدء؟</h2>
-    <p>تواصل معنا لطلب تجربة مجانية 14 يوم</p>
+    <p>تواصل معنا لطلب تجربة مجانية 14 يوم أو الاستفسار عن أي خطة</p>
     <div class="contact-buttons">
-        <a href="https://wa.me/9647700970716" class="btn btn-primary">💬 واتساب</a>
-        <a href="https://t.me/@hmk1005" class="btn btn-secondary">📱 تيليجرام</a>
-        <a href="hussam.mahmood.k@gmail.com" class="btn btn-secondary">✉️ البريد</a>
+        <a href="https://wa.me/9647700970716" class="btn btn-primary">💬 واتساب: 07700970716</a>
+        <a href="https://t.me/pharmacypro_iq" class="btn btn-secondary">📱 تيليجرام</a>
+        <a href="mailto:pharmacypro.iq@gmail.com" class="btn btn-secondary">✉️ البريد</a>
     </div>
 </section>
 
 <!-- Footer -->
 <footer>
     <p>© 2026 Pharmacy Pro — جميع الحقوق محفوظة</p>
+    <p style="margin-top: 10px; font-size: 0.85em;">v2.0.8 — نظام إدارة صيدليات متكامل</p>
 </footer>
 
 </body>
