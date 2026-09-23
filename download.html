@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل Pharmacy Pro v2.1.1</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Segoe UI', 'Tahoma', sans-serif;
+        background: #0a0e1a;
+        color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Header */
+    .header {
+        background: linear-gradient(135deg, #0a0e1a, #1e293b);
+        padding: 40px 20px;
+        text-align: center;
+        border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+    }
+    .header .logo {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+    .header h1 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+    }
+    .header .subtitle {
+        color: #94a3b8;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+    .header .version-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 8px 25px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.95rem;
+    }
+    
+    /* Main */
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        flex: 1;
+    }
+    
+    /* Info Banner */
+    .info-banner {
+        background: rgba(139, 92, 246, 0.1);
+        border: 2px solid rgba(139, 92, 246, 0.3);
+        border-radius: 15px;
+        padding: 20px 25px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    .info-banner strong {
+        color: #a78bfa;
+        font-size: 1.1rem;
+    }
+    .info-banner p {
+        color: #cbd5e1;
+        margin-top: 8px;
+        font-size: 0.95rem;
+    }
+    
+    /* Download Cards */
+    .downloads {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+    .download-card {
+        background: rgba(30, 41, 59, 0.8);
+        border: 2px solid rgba(96, 165, 250, 0.2);
+        border-radius: 18px;
+        padding: 30px 25px;
+        transition: all 0.3s;
+        position: relative;
+    }
+    .download-card:hover {
+        border-color: #3b82f6;
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+    }
+    .download-card.recommended {
+        border-color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.1);
+    }
+    .download-card.recommended::before {
+        content: "⭐ موصى به";
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 4px 15px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+    .download-card .icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    .download-card h3 {
+        color: #60a5fa;
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+    .download-card.recommended h3 {
+        color: #a78bfa;
+    }
+    .download-card .size {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    .download-card .features {
+        list-style: none;
+        margin-bottom: 20px;
+    }
+    .download-card .features li {
+        color: #cbd5e1;
+        padding: 6px 0;
+        font-size: 0.95rem;
+    }
+    .download-card .features li::before {
+        content: "✅ ";
+        color: #10b981;
+    }
+    .download-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 1rem;
+        text-align: center;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+    }
+    .download-btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+    }
+    .download-card.recommended .download-btn {
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    }
+    
+    /* Additional Downloads */
+    .additional {
+        margin-top: 40px;
+    }
+    .additional h3 {
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .additional-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    .additional-item {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(96, 165, 250, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s;
+    }
+    .additional-item:hover {
+        border-color: #3b82f6;
+        background: rgba(59, 130, 246, 0.1);
+    }
+    .additional-item .ad-icon {
+        font-size: 35px;
+    }
+    .additional-item .ad-info h4 {
+        color: #60a5fa;
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    .additional-item .ad-info p {
+        color: #94a3b8;
+        font-size: 0.8rem;
+    }
+    
+    /* Steps */
+    .steps-section {
+        margin-top: 50px;
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 18px;
+        padding: 35px;
+        border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+    .steps-section h3 {
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    .steps-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    .step-item {
+        text-align: center;
+        position: relative;
+        padding: 20px;
+    }
+    .step-number {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin: 0 auto 15px;
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    }
+    .step-item h4 {
+        color: #60a5fa;
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+    .step-item p {
+        color: #94a3b8;
+        font-size: 0.85rem;
+    }
+    
+    /* Contact */
+    .contact {
+        margin-top: 50px;
+        background: linear-gradient(135deg, #1e293b, #0a0e1a);
+        padding: 40px 25px;
+        border-radius: 18px;
+        text-align: center;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .contact h3 {
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    .contact p {
+        color: #94a3b8;
+        margin-bottom: 25px;
+    }
+    .contact-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .contact-btn {
+        padding: 14px 30px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+    }
+    .contact-btn.whatsapp {
+        background: #25d366;
+        color: white;
+    }
+    .contact-btn.telegram {
+        background: #0088cc;
+        color: white;
+    }
+    .contact-btn.email {
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border: 2px solid rgba(255,255,255,0.2);
+    }
+    .contact-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    
+    /* Footer */
+    footer {
+        padding: 25px;
+        text-align: center;
+        color: #64748b;
+        font-size: 0.9rem;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    /* Mobile */
+    @media (max-width: 600px) {
+        .header h1 { font-size: 1.8rem; }
+        .header .logo { font-size: 45px; }
+        .downloads { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="logo">💊</div>
+    <h1>Pharmacy Pro</h1>
+    <div class="subtitle">نظام إدارة صيدليات + AI</div>
+    <div class="version-badge">🤖 الإصدار 2.1.1 — AI Edition</div>
+</div>
+
+<div class="container">
+    
+    <!-- Info Banner -->
+    <div class="info-banner">
+        <strong>🎉 مرحباً بك في صفحة التحميل الرسمية</strong>
+        <p>جميع الملفات آمنة ومختبرة • تحميل مباشر • بدون تسجيل</p>
+    </div>
+    
+    <!-- Main Downloads -->
+    <div class="downloads">
+        
+        <!-- Full -->
+        <div class="download-card recommended">
+            <div class="icon">🏆</div>
+            <h3>Full + Bot</h3>
+            <div class="size">📦 224 MB • سطح المكتب + بوت تيليجرام</div>
+            <ul class="features">
+                <li>كل ميزات Desktop</li>
+                <li>بوت تيليجرام مدمج</li>
+                <li>إشعارات فورية على الجوال</li>
+                <li>تقارير يومية تلقائية</li>
+                <li>AI + Prophet Forecasting</li>
+            </ul>
+            <a href="https://github.com/pharmacypro99/pharmacy_updates/releases/download/v2.1.1/PharmacyPro_Setup_v2.1.1.exe" 
+               class="download-btn">
+                📥 حمّل الآن
+            </a>
+        </div>
+        
+        <!-- Desktop -->
+        <div class="download-card">
+            <div class="icon">🖥️</div>
+            <h3>Desktop فقط</h3>
+            <div class="size">📦 142 MB • بدون بوت</div>
+            <ul class="features">
+                <li>إدارة المخزون والمبيعات</li>
+                <li>إدارة العملاء والديون</li>
+                <li>تقارير محاسبية كاملة</li>
+                <li>نسخ احتياطي تلقائي</li>
+                <li>AI + Prophet Forecasting</li>
+            </ul>
+            <a href="https://github.com/pharmacypro99/pharmacy_updates/releases/download/v2.1.1/PharmacyPro_Desktop_Setup_v2.1.1.exe" 
+               class="download-btn">
+                📥 حمّل الآن
+            </a>
+        </div>
+        
+    </div>
+    
+    <!-- Additional Downloads -->
+    <div class="additional">
+        <h3>📎 ملفات إضافية</h3>
+        <div class="additional-grid">
+            
+            <a href="https://github.com/pharmacypro99/pharmacy_updates/releases/download/v2.1.1/PharmacyPro_UserManual_v2.1.1.pdf" 
+               class="additional-item">
+                <div class="ad-icon">📘</div>
+                <div class="ad-info">
+                    <h4>دليل الاستخدام</h4>
+                    <p>PDF • 65 صفحة</p>
+                </div>
+            </a>
+            
+            <a href="https://github.com/pharmacypro99/pharmacy_updates/releases/download/v2.1.1/PharmacySystem.exe" 
+               class="additional-item">
+                <div class="ad-icon">💼</div>
+                <div class="ad-info">
+                    <h4>Portable Desktop</h4>
+                    <p>بدون تثبيت</p>
+                </div>
+            </a>
+            
+            <a href="https://github.com/pharmacypro99/pharmacy_updates/releases/download/v2.1.1/PharmacyBot.exe" 
+               class="additional-item">
+                <div class="ad-icon">🤖</div>
+                <div class="ad-info">
+                    <h4>Portable Bot</h4>
+                    <p>للبوت فقط</p>
+                </div>
+            </a>
+            
+            <a href="https://github.com/pharmacypro99/pharmacy_updates/releases/tag/v2.1.1" 
+               class="additional-item">
+                <div class="ad-icon">📋</div>
+                <div class="ad-info">
+                    <h4>صفحة الإصدار</h4>
+                    <p>كل التفاصيل</p>
+                </div>
+            </a>
+            
+        </div>
+    </div>
+    
+    <!-- Installation Steps -->
+    <div class="steps-section">
+        <h3>🚀 خطوات التثبيت</h3>
+        <div class="steps-list">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <h4>نزّل الملف</h4>
+                <p>اختر النسخة المناسبة</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <h4>شغّل المثبّت</h4>
+                <p>دبل كليك على الملف</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <h4>اقبل الترخيص</h4>
+                <p>اقرأ ووافق</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">4</div>
+                <h4>اضغط التالي</h4>
+                <p>حتى نهاية التثبيت</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">5</div>
+                <h4>التفعيل</h4>
+                <p>أرسل Machine ID لنا</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">6</div>
+                <h4>ابدأ</h4>
+                <p>سجّل دخول: admin</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contact -->
+    <div class="contact">
+        <h3>📞 للتواصل والتفعيل</h3>
+        <p>للاستفسار عن الأسعار، التفعيل، أو الدعم الفني</p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/9647700970716?text=مرحباً%2C%20أريد%20معلومات%20عن%20Pharmacy%20Pro" 
+               class="contact-btn whatsapp">
+                💬 واتساب: 07700970716
+            </a>
+            <a href="https://t.me/pharmacypro_iq" 
+               class="contact-btn telegram">
+                📱 تيليجرام
+            </a>
+            <a href="mailto:pharmacypro.iq@gmail.com" 
+               class="contact-btn email">
+                ✉️ البريد
+            </a>
+        </div>
+    </div>
+    
+</div>
+
+<footer>
+    <p>© 2026 Pharmacy Pro — جميع الحقوق محفوظة</p>
+    <p style="margin-top: 8px; font-size: 0.85em;">v2.1.1 — AI Edition 🤖</p>
+</footer>
+
+</body>
+</html>
