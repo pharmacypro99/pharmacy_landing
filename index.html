@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pharmacy Pro v2.0.8 — نظام إدارة الصيدليات المتكامل</title>
-<meta name="description" content="نظام إدارة صيدليات متكامل: مخزون، مبيعات، تقارير، بوت تيليجرام. دعم كامل للعربية والإنجليزية.">
+<title>Pharmacy Pro v2.1.1 — نظام إدارة صيدليات + AI</title>
+<meta name="description" content="نظام إدارة صيدليات متكامل مع ذكاء اصطناعي حقيقي: تنبؤات، توصيات ذكية، بوت تيليجرام، ثنائي اللغة.">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -13,63 +13,103 @@
         color: #e5e7eb;
         line-height: 1.7;
     }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     
     /* Version Banner */
     .version-banner {
         background: linear-gradient(135deg, #8b5cf6, #ec4899);
         color: white;
-        padding: 12px 20px;
+        padding: 14px 20px;
         text-align: center;
         font-weight: bold;
-        font-size: 1rem;
+        font-size: 1.05rem;
         position: relative;
+        overflow: hidden;
+    }
+    .version-banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shine 3s infinite;
+    }
+    @keyframes shine {
+        to { left: 100%; }
     }
     .version-banner a {
         color: white;
         text-decoration: underline;
         margin-right: 15px;
         cursor: pointer;
+        position: relative;
+        z-index: 1;
     }
     .version-badge {
         display: inline-block;
-        background: rgba(255,255,255,0.2);
-        padding: 2px 10px;
+        background: rgba(255,255,255,0.25);
+        padding: 3px 12px;
         border-radius: 12px;
-        font-size: 0.9em;
-        margin-left: 10px;
+        font-size: 0.85em;
+        margin-left: 8px;
+        position: relative;
+        z-index: 1;
     }
     
-    /* Header */
+    /* Hero */
     .hero {
-        min-height: 80vh;
+        min-height: 85vh;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        background: linear-gradient(135deg, #0a0e1a 0%, #1e293b 50%, #0a0e1a 100%);
+        background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0a0e1a 70%);
         padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
     }
-    .hero-content { max-width: 800px; }
+    .hero::before {
+        content: "🤖";
+        position: absolute;
+        font-size: 400px;
+        opacity: 0.03;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .hero-content { max-width: 900px; position: relative; z-index: 1; }
     .hero h1 {
-        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-size: clamp(2rem, 5.5vw, 4rem);
         font-weight: 800;
         margin-bottom: 20px;
         background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        line-height: 1.2;
     }
     .hero p {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
         color: #94a3b8;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+    }
+    .hero .tagline {
+        display: inline-block;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        font-size: 0.95rem;
     }
     .cta-buttons {
         display: flex;
         gap: 20px;
         justify-content: center;
         flex-wrap: wrap;
+        margin-top: 20px;
     }
     .btn {
         padding: 16px 40px;
@@ -80,6 +120,7 @@
         transition: all 0.3s;
         display: inline-block;
         cursor: pointer;
+        border: none;
     }
     .btn-primary {
         background: linear-gradient(135deg, #3b82f6, #8b5cf6);
@@ -97,7 +138,30 @@
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.2); }
     
-    /* Features */
+    /* AI Feature Highlight */
+    .ai-showcase {
+        padding: 80px 20px;
+        background: linear-gradient(135deg, #1e1b4b 0%, #0a0e1a 100%);
+    }
+    .ai-showcase .section-title {
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .ai-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 4px 14px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+    
+    /* Sections */
     .features {
         padding: 80px 20px;
         background: #0f172a;
@@ -121,21 +185,25 @@
         border-radius: 16px;
         padding: 32px;
         transition: all 0.3s;
+        position: relative;
     }
     .feature-card:hover {
         border-color: #3b82f6;
         transform: translateY(-5px);
         box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
     }
-    .feature-card.new {
+    .feature-card.ai {
         border-color: #8b5cf6;
-        background: rgba(139, 92, 246, 0.05);
-        position: relative;
+        background: rgba(139, 92, 246, 0.08);
+    }
+    .feature-card.ai:hover {
+        border-color: #a78bfa;
+        box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
     }
     .new-badge {
         position: absolute;
         top: -10px;
-        left: 20px;
+        right: 20px;
         background: linear-gradient(135deg, #8b5cf6, #ec4899);
         color: white;
         padding: 3px 12px;
@@ -152,7 +220,52 @@
         margin-bottom: 12px;
         color: #60a5fa;
     }
+    .feature-card.ai h3 { color: #a78bfa; }
     .feature-card p { color: #94a3b8; }
+    
+    /* AI Demo Box */
+    .ai-demo {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(139, 92, 246, 0.1);
+        border: 2px solid rgba(139, 92, 246, 0.3);
+        border-radius: 20px;
+        padding: 40px;
+        margin-top: 40px;
+    }
+    .ai-demo h3 {
+        color: #a78bfa;
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    .ai-demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    .ai-demo-item {
+        background: rgba(30, 41, 59, 0.6);
+        border-radius: 12px;
+        padding: 20px;
+        border-right: 4px solid #8b5cf6;
+    }
+    .ai-demo-item .label {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+    .ai-demo-item .value {
+        color: #a78bfa;
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    .ai-demo-item.urgent { border-color: #ef4444; }
+    .ai-demo-item.urgent .value { color: #ef4444; }
+    .ai-demo-item.reorder { border-color: #f59e0b; }
+    .ai-demo-item.reorder .value { color: #f59e0b; }
+    .ai-demo-item.normal { border-color: #10b981; }
+    .ai-demo-item.normal .value { color: #10b981; }
     
     /* Pricing */
     .pricing {
@@ -181,7 +294,7 @@
         border-color: #8b5cf6;
         transform: scale(1.05);
         box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
-        background: rgba(139, 92, 246, 0.05);
+        background: rgba(139, 92, 246, 0.08);
     }
     .price-card.featured::before {
         content: "⭐ الأكثر طلباً";
@@ -249,6 +362,10 @@
         content: "✅ ";
         color: #10b981;
     }
+    .price-features li.ai::before {
+        content: "🤖 ";
+        color: #a78bfa;
+    }
     .price-features li.cross::before {
         content: "❌ ";
         color: #ef4444;
@@ -267,11 +384,27 @@
         text-align: center;
         color: white;
     }
-    .guarantee h3 {
-        font-size: 1.8rem;
-        margin-bottom: 15px;
-    }
+    .guarantee h3 { font-size: 1.8rem; margin-bottom: 15px; }
     .guarantee p { font-size: 1.1rem; opacity: 0.95; }
+    
+    /* FAQ */
+    .faq { padding: 60px 20px; background: #0f172a; }
+    .faq-item {
+        max-width: 800px;
+        margin: 0 auto 20px;
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 12px;
+        padding: 20px 25px;
+        border-right: 3px solid #3b82f6;
+    }
+    .faq-item.ai-faq { border-color: #8b5cf6; }
+    .faq-item h4 {
+        color: #60a5fa;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .faq-item.ai-faq h4 { color: #a78bfa; }
+    .faq-item p { color: #94a3b8; }
     
     /* Contact */
     .contact {
@@ -279,11 +412,7 @@
         background: linear-gradient(135deg, #1e293b, #0a0e1a);
         text-align: center;
     }
-    .contact h2 {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
-        color: white;
-    }
+    .contact h2 { font-size: 2.5rem; margin-bottom: 20px; color: white; }
     .contact p {
         font-size: 1.15rem;
         color: #94a3b8;
@@ -296,27 +425,6 @@
         flex-wrap: wrap;
     }
     
-    /* FAQ */
-    .faq {
-        padding: 60px 20px;
-        background: #0f172a;
-    }
-    .faq-item {
-        max-width: 800px;
-        margin: 0 auto 20px;
-        background: rgba(30, 41, 59, 0.5);
-        border-radius: 12px;
-        padding: 20px 25px;
-        border-right: 3px solid #3b82f6;
-    }
-    .faq-item h4 {
-        color: #60a5fa;
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-    }
-    .faq-item p { color: #94a3b8; }
-    
-    /* Footer */
     footer {
         padding: 30px;
         text-align: center;
@@ -333,78 +441,126 @@
 
 <!-- Version Banner -->
 <div class="version-banner">
-    🎉 الإصدار 2.0.8 متاح — دعم ثنائي اللغة كامل
-    <span class="version-badge">v2.0.8</span>
+    🤖 إصدار AI Edition متاح — Prophet + تنبؤات ذكية
+    <span class="version-badge">v2.1.1</span>
     <a href="#pricing">اكتشف الجديد →</a>
 </div>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero">
     <div class="hero-content">
-        <h1>نظام إدارة الصيدليات المتكامل</h1>
-        <p>حل شامل لإدارة صيدليتك: مخزون، مبيعات، تقارير، وبوت تيليجرام — بدعم كامل للعربية والإنجليزية</p>
+        <div class="tagline">🎉 لأول مرة في العراق — AI Edition</div>
+        <h1>نظام إدارة صيدليات<br>مع ذكاء اصطناعي حقيقي</h1>
+        <p>توقّع الطلب، توصيات آلية، وتحكم كامل بصيدليتك — بدعم كامل للعربية والإنجليزية</p>
         <div class="cta-buttons">
             <a href="#pricing" class="btn btn-primary">🎁 تجربة مجانية 14 يوم</a>
-            <a href="#features" class="btn btn-secondary">📖 تعرّف على الميزات</a>
+            <a href="#ai-features" class="btn btn-secondary">🤖 اكتشف الذكاء الاصطناعي</a>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
-<section class="features" id="features">
+<!-- AI Showcase -->
+<section class="ai-showcase" id="ai-features">
+    <h2 class="section-title">🤖 الذكاء الاصطناعي في صيدليتك</h2>
+    
+    <div class="ai-demo">
+        <h3>📊 نموذج من التحليل الذكي</h3>
+        <div class="ai-demo-grid">
+            <div class="ai-demo-item urgent">
+                <div class="label">🔴 أدوية عاجلة</div>
+                <div class="value">Voltaren — 2 يوم</div>
+            </div>
+            <div class="ai-demo-item reorder">
+                <div class="label">🟠 تحتاج طلب</div>
+                <div class="value">Diclofenac — 26 أنبوب</div>
+            </div>
+            <div class="ai-demo-item normal">
+                <div class="label">🟢 تنبؤ Panadol</div>
+                <div class="value">27.3 شريط / شهر</div>
+            </div>
+        </div>
+        <p style="text-align: center; margin-top: 25px; color: #94a3b8;">
+            ✨ يحلل تاريخ 365 يوم • Prophet من Meta • تنبؤات 30 يوم • ثنائي اللغة
+        </p>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="features">
     <h2 class="section-title">✨ كل ما تحتاجه في مكان واحد</h2>
     <div class="features-grid">
+        
+        <div class="feature-card ai">
+            <span class="new-badge">جديد v2.1.1</span>
+            <div class="feature-icon">🧠</div>
+            <h3>تنبؤات ذكية</h3>
+            <p>توقعات 30 يوم لكل دواء بتقنية Prophet — اعرف ماذا تطلب ومتى</p>
+        </div>
+        
+        <div class="feature-card ai">
+            <span class="new-badge">جديد v2.1.1</span>
+            <div class="feature-icon">💡</div>
+            <h3>توصيات آلية</h3>
+            <p>4 مستويات ذكية: عاجل، يحتاج طلب، راقب، عادي — تحليل تلقائي</p>
+        </div>
+        
+        <div class="feature-card ai">
+            <span class="new-badge">جديد v2.1.1</span>
+            <div class="feature-icon">📊</div>
+            <h3>تحليل 30 دواء</h3>
+            <p>تحليل كامل للمخزون في 3 دقائق — عرض بصري احترافي</p>
+        </div>
+        
         <div class="feature-card">
             <div class="feature-icon">📦</div>
             <h3>إدارة المخزون</h3>
             <p>تتبع الأدوية، الدفعات، تواريخ الانتهاء، والتنبيهات التلقائية</p>
         </div>
+        
         <div class="feature-card">
             <div class="feature-icon">🛒</div>
             <h3>نظام المبيعات</h3>
             <p>بيع سريع، خصومات، طرق دفع متعددة، طباعة حرارية</p>
         </div>
+        
         <div class="feature-card">
             <div class="feature-icon">👥</div>
             <h3>العملاء والديون</h3>
             <p>إدارة كاملة للعملاء، متابعة الديون، تقارير مفصلة</p>
         </div>
+        
         <div class="feature-card">
             <div class="feature-icon">📊</div>
             <h3>التقارير المحاسبية</h3>
             <p>نظام مزدوج القيد، تقارير مالية، أرباح، ضرائب</p>
         </div>
+        
         <div class="feature-card">
             <div class="feature-icon">🤖</div>
             <h3>بوت تيليجرام</h3>
             <p>إشعارات فورية، تقارير مبيعات، تنبيهات المخزون من جوالك</p>
         </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>دعم ثنائي اللغة</h3>
+            <p>كل شاشة، رسالة، تقرير — بالعربية والإنجليزية بضغطة واحدة</p>
+        </div>
+        
         <div class="feature-card">
             <div class="feature-icon">🔒</div>
             <h3>أمان متقدم</h3>
             <p>تشفير قاعدة البيانات، ترخيص مرتبط بالجهاز، نسخ احتياطي تلقائي</p>
         </div>
-        <div class="feature-card new">
-            <span class="new-badge">جديد v2.0.8</span>
-            <div class="feature-icon">🌐</div>
-            <h3>دعم ثنائي اللغة كامل</h3>
-            <p>كل شاشة، رسالة، تقرير — بالعربية والإنجليزية بضغطة واحدة</p>
-        </div>
-        <div class="feature-card new">
-            <span class="new-badge">جديد v2.0.8</span>
-            <div class="feature-icon">🎯</div>
-            <h3>رسائل ترخيص ذكية</h3>
-            <p>تحذيرات التفعيل والنظام بلغتك المفضلة — تجربة موحدة</p>
-        </div>
+        
     </div>
 </section>
 
-<!-- Pricing Section -->
+<!-- Pricing -->
 <section class="pricing" id="pricing">
     <h2 class="section-title">💰 خطط وأسعار</h2>
     <div class="pricing-grid">
         
-        <!-- Desktop Yearly -->
         <div class="price-card">
             <h3>🖥️ Desktop</h3>
             <div class="price">
@@ -417,12 +573,11 @@
                 <li>تقارير كاملة</li>
                 <li>نسخ احتياطي تلقائي</li>
                 <li class="cross">بوت تيليجرام</li>
-                <li>دعم فني أساسي</li>
+                <li class="cross">AI + Prophet</li>
             </ul>
             <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
         </div>
         
-        <!-- Desktop + Bot Yearly -->
         <div class="price-card">
             <h3>🖥️ + 🤖 سنوي</h3>
             <div class="price">
@@ -434,13 +589,12 @@
                 <li>بوت تيليجرام مدمج</li>
                 <li>إشعارات فورية</li>
                 <li>تقارير من جوالك</li>
-                <li>ترخيص منفصل للبوت</li>
+                <li class="ai">AI + Prophet Forecasting</li>
                 <li>دعم فني مميز</li>
             </ul>
             <a href="#contact" class="btn btn-secondary">اطلب الآن</a>
         </div>
         
-        <!-- Lifetime Featured -->
         <div class="price-card featured lifetime">
             <h3>♾️ مدى الحياة</h3>
             <div class="discount-badge">🎁 وفّر 50%</div>
@@ -452,15 +606,14 @@
             <ul class="price-features">
                 <li>كل ميزات Full</li>
                 <li>سطح المكتب + بوت</li>
+                <li class="ai">AI + Prophet Forecasting</li>
                 <li>ترخيص دائم (لا انتهاء)</li>
                 <li>تحديثات مجانية سنتين</li>
                 <li>دعم فني 6 أشهر</li>
-                <li>تدريب مجاني (ساعتان)</li>
             </ul>
             <a href="#contact" class="btn btn-primary">اطلب الآن</a>
         </div>
         
-        <!-- Enterprise -->
         <div class="price-card">
             <h3>🏢 Enterprise</h3>
             <div class="price">
@@ -469,7 +622,7 @@
             </div>
             <ul class="price-features">
                 <li>كل ميزات Lifetime</li>
-                <li>تخصيص كامل</li>
+                <li class="ai">AI مخصص وتدريب إضافي</li>
                 <li>ربط بعدة فروع</li>
                 <li>API خاص</li>
                 <li>دعم على مدار الساعة</li>
@@ -481,29 +634,29 @@
     </div>
 </section>
 
-<!-- Guarantee Section -->
+<!-- Guarantee -->
 <section class="guarantee">
     <h3>🛡️ ضمان استرداد كامل 30 يوم</h3>
     <p>إذا لم يعجبك النظام في أول 30 يوم، نُعيد لك المبلغ كاملاً — بدون أسئلة</p>
 </section>
 
-<!-- FAQ Section -->
+<!-- FAQ -->
 <section class="faq">
     <h2 class="section-title">❓ أسئلة شائعة</h2>
+    
+    <div class="faq-item ai-faq">
+        <h4>🤖 كيف يعمل الذكاء الاصطناعي؟</h4>
+        <p>يحلل النظام تاريخ مبيعات آخر 365 يوم لكل دواء باستخدام Prophet (من Meta)، ثم يتنبأ بالطلب للأيام الـ 30 القادمة مع فترة ثقة 95%، ويقترح كمية الطلب تلقائياً.</p>
+    </div>
+    
+    <div class="faq-item ai-faq">
+        <h4>🌐 هل يحتاج اتصال بالإنترنت؟</h4>
+        <p>لا! Prophet + CmdStan مضمّنان بالكامل داخل التطبيق. يعمل offline تماماً بعد التثبيت.</p>
+    </div>
     
     <div class="faq-item">
         <h4>💰 الفرق بين السنوي ومدى الحياة؟</h4>
         <p>السنوي: تدفع سنوياً وتجدد. مدى الحياة: تدفعة واحدة، الترخيص دائم — توفير 50% بعد سنتين.</p>
-    </div>
-    
-    <div class="faq-item">
-        <h4>🖥️ هل يعمل على أكثر من جهاز؟</h4>
-        <p>الترخيص مرتبط بجهاز واحد. للأجهزة الإضافية: خصم 30% لكل جهاز.</p>
-    </div>
-    
-    <div class="faq-item">
-        <h4>🔄 ماذا بعد انتهاء الترخيص السنوي؟</h4>
-        <p>يمكنك التجديد بنفس السعر، أو الترقية إلى مدى الحياة بدفعة واحدة بخصم.</p>
     </div>
     
     <div class="faq-item">
@@ -518,7 +671,7 @@
     
 </section>
 
-<!-- Contact Section -->
+<!-- Contact -->
 <section class="contact" id="contact">
     <h2>📞 جاهز للبدء؟</h2>
     <p>تواصل معنا لطلب تجربة مجانية 14 يوم أو الاستفسار عن أي خطة</p>
@@ -529,10 +682,9 @@
     </div>
 </section>
 
-<!-- Footer -->
 <footer>
     <p>© 2026 Pharmacy Pro — جميع الحقوق محفوظة</p>
-    <p style="margin-top: 10px; font-size: 0.85em;">v2.0.8 — نظام إدارة صيدليات متكامل</p>
+    <p style="margin-top: 10px; font-size: 0.85em;">v2.1.1 — AI Edition 🤖</p>
 </footer>
 
 </body>
