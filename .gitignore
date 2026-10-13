@@ -17,3 +17,5 @@ Thumbs.db
 
 # QR codes (احتفظ بها محلياً فقط)
 qr/
+*.bak_*
+*.bak
